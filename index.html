@@ -11,13 +11,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #050005; /* Fondo casi negro rosado */
+            background-color: #050005; 
             overflow: hidden;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            perspective: 1000px; /* Para efecto 3D al presionar */
+            perspective: 1000px;
         }
 
-        /* Contenedor del Corazón Principal para centrarlo y detecta clics */
+    
         .heart-container {
             position: relative;
             cursor: pointer;
@@ -26,10 +26,10 @@
         }
 
         .heart-container:active {
-            transform: scale(0.9) rotateX(10deg); /* Efecto de presionado */
+            transform: scale(0.9) rotateX(10deg); 
         }
 
-        /* El Corazón Principal */
+       
         .main-heart {
             position: relative;
             width: 120px;
@@ -53,7 +53,7 @@
         .main-heart::before { top: -60px; left: 0; }
         .main-heart::after { left: 60px; top: 0; }
 
-        /* Animación de Entrada del Corazón */
+       
         @keyframes explodeBuild {
             0% { transform: rotate(-45deg) scale(0); filter: brightness(2) blur(5px); }
             40% { transform: rotate(-45deg) scale(1.6); filter: brightness(1.2) blur(0); }
@@ -62,7 +62,7 @@
             100% { transform: rotate(-45deg) scale(1); }
         }
 
-        /* Estilo para el nombre "Maite" que sale al hacer clic */
+      
         .name-float {
             position: absolute;
             color: white;
@@ -96,7 +96,7 @@
             position: absolute;
             width: 20px;
             height: 20px;
-            background-color: rgba(255, 255, 255, 0.85); /* Color blanco/rosado muy claro */
+            background-color: rgba(255, 255, 255, 0.85); 
             transform: rotate(-45deg);
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
@@ -114,7 +114,7 @@
         .mini-heart-css .heart-shape::before { top: -10px; left: 0; }
         .mini-heart-css .heart-shape::after { left: 10px; top: 0; }
 
-        /* La letra M dentro del mini corazón */
+        
         .mini-heart-css .letter-m {
             position: absolute;
             width: 100%;
@@ -122,8 +122,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            top: 2px; /* Ajuste fino para centrar visualmente en el rombo rotado */
-            color: #ff2e63; /* Color de la letra contrastante */
+            top: 2px; 
+            color: #ff2e63; 
             font-size: 16px;
             font-weight: bold;
             font-family: Arial, sans-serif;
@@ -147,64 +147,53 @@
     <script>
         const heartContainer = document.getElementById('mainHeartContainer');
 
-        // Función para crear el nombre Maite al hacer clic
         heartContainer.addEventListener('click', (e) => {
             const name = document.createElement('div');
             name.classList.add('name-float');
             name.innerText = 'Maite';
 
-            // Posicionar el nombre en el centro del corazón
-            // Usamos coordenadas relativas al contenedor
             name.style.left = '50%';
             name.style.top = '50%';
 
             heartContainer.appendChild(name);
 
-            // Eliminar el elemento después de la animación
             setTimeout(() => {
                 name.remove();
             }, 2000);
             
-            // Opcional: Pequeña explosión extra de mini corazones al hacer clic
             for(let i=0; i<3; i++) {
                 createMiniHeart(true);
             }
         });
-
-        // Función para crear los mini corazones CSS claros con la M
+        
         function createMiniHeart(isBurst = false) {
             const container = document.createElement('div');
             container.classList.add('mini-heart-css');
             
-            // Estructura interna: El corazón y la letra
             container.innerHTML = `
                 <div class="heart-shape"></div>
                 <div class="letter-m">m</div>
             `;
             
-            // Posición horizontal aleatoria
             container.style.left = Math.random() * 100 + "vw";
             
-            // Variación de tamaño aleatoria
-            const scale = Math.random() * 0.5 + 0.7; // Entre 0.7 y 1.2
+            const scale = Math.random() * 0.5 + 0.7;
             container.style.transform = `scale(${scale})`;
 
-            // Duración y retraso aleatorio para la animación de fondo
-            const duration = (Math.random() * 4 + 4) + "s"; // Entre 4 y 8s
+           
+            const duration = (Math.random() * 4 + 4) + "s"; 
             container.style.animationDuration = duration;
 
             if (isBurst) {
-                // Si es una explosión por clic, aparecen cerca del corazón y suben rápido
+             
                 container.style.left = (50 + (Math.random() * 20 - 10)) + "vw";
                 container.style.top = "50vh";
                 container.style.animation = 'floatName 1.5s ease-out forwards';
-                // Cambiamos el color para el burst
                 container.querySelector('.heart-shape').style.backgroundColor = 'white';
             }
 
             document.body.appendChild(container);
 
-            // Limpiar el DOM cuando termina la animación larga
             setTimeout(() => {
                 container.remove();
             }, 8000);
